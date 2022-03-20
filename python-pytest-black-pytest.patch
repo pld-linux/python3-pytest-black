@@ -1,0 +1,65 @@
+Fix testdir.makefile usage according to:
+https://github.com/pytest-dev/pytest/issues/8192
+
+--- pytest-black-0.3.12/tests/test_black.py.orig	2020-10-05 11:41:50.000000000 +0200
++++ pytest-black-0.3.12/tests/test_black.py	2022-03-20 15:31:40.434889879 +0100
+@@ -71,8 +71,7 @@ def test_mtime_cache(testdir):
+ def test_exclude(testdir):
+     """Assert test is skipped if path is excluded even if also included
+     """
+-    testdir.makefile(
+-        "pyproject.toml",
++    testdir.makepyprojecttoml(
+         """
+         [tool.black]
+             include = 'test_exclude.py'
+@@ -89,9 +88,6 @@ def test_exclude(testdir):
+     # replace trailing newline (stripped by testdir.makepyfile)
+     p = p.write(p.read() + "\n")
+ 
+-    # Rename pyproject.toml ¯\_(ツ)_/¯
+-    testdir.run("mv", "test_exclude.pyproject.toml", "pyproject.toml")
+-
+     result = testdir.runpytest("--black")
+     result.assert_outcomes(skipped=1, passed=0)
+ 
+@@ -99,8 +95,7 @@ def test_exclude(testdir):
+ def test_exclude_folder(testdir):
+     """Assert test is skipped for files in a folder
+     """
+-    testdir.makefile(
+-        "pyproject.toml",
++    testdir.makepyprojecttoml(
+         """
+         [tool.black]
+             exclude = '''
+@@ -126,9 +121,6 @@ def test_exclude_folder(testdir):
+     ignore_folder = testdir.mkdir("ignore_folder")
+     testdir.run("mv", "test_exclude_folder.py", ignore_folder)
+ 
+-    # Rename pyproject.toml ¯\_(ツ)_/¯
+-    testdir.run("mv", "test_exclude_folder.pyproject.toml", "pyproject.toml")
+-
+     result = testdir.runpytest("--black")
+     result.assert_outcomes(skipped=1, passed=0)
+ 
+@@ -136,8 +128,7 @@ def test_exclude_folder(testdir):
+ def test_include(testdir):
+     """Assert test is not skipped if path is included but not excluded
+     """
+-    testdir.makefile(
+-        "pyproject.toml",
++    testdir.makepyprojecttoml(
+         """
+         [tool.black]
+             include = 'test_include'
+@@ -153,9 +144,6 @@ def test_include(testdir):
+     # replace trailing newline (stripped by testdir.makepyfile)
+     p = p.write(p.read() + "\n")
+ 
+-    # Rename pyproject.toml ¯\_(ツ)_/¯
+-    testdir.run("mv", "test_include.pyproject.toml", "pyproject.toml")
+-
+     result = testdir.runpytest("--black")
+     result.assert_outcomes(skipped=0, passed=1)
+ 
