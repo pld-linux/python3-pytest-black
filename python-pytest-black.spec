@@ -65,7 +65,7 @@ Wtyczka pytesta do sprawdzania formatowania przy użyciu modułu black
 
 %prep
 %setup -q -n pytest-black-%{version}
-%patch0 -p1
+%patch -P 0 -p1
 
 %build
 %if %{with python2}
