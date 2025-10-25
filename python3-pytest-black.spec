@@ -6,7 +6,7 @@ Summary:	pytest plugin to enable format checking with black
 Summary(pl.UTF-8):	Wtyczka pytesta do sprawdzania formatowania przy użyciu modułu black
 Name:		python3-pytest-black
 Version:	0.6.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pytest-black/
@@ -24,7 +24,7 @@ BuildRequires:	python3-toml
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
-Requires:	python-modules >= 1:2.7
+Requires:	python3-modules >= 1:3.6
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
